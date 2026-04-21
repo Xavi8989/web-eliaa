@@ -3,127 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexSalud | Seguridad Farmacológica</title>
+    <title>NexSalud | Seguridad Farmacológica Inteligente</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <script>
+        // Configuración personalizada de Tailwind basada en la imagen del logo original
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        nxBlue: '#0052FF',
-                        nxLightBlue: '#8ECAE6',
-                        nxPink: '#FFB7C5',
-                    }
+                        nxBlueText: '#0047AB', // El azul exacto del texto del logo original
+                        nxGradientStart: '#87CEEB', // Azul claro del inicio del degradado original
+                        nxGradientEnd: '#FFB6C1', // Rosa claro del final del degradado original
+                        nxBackground: '#FDFDFF' // Un blanco azulado muy sutil para el fondo
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        title: ['Poppins', 'sans-serif'],
+                    },
                 }
             }
         }
     </script>
 
     <style>
-        .nx-gradient { background: linear-gradient(135deg, rgba(142, 202, 230, 0.4) 0%, rgba(255, 183, 197, 0.4) 100%); }
-        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
-        .floating { animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        html { scroll-behavior: smooth; }
         
-        /* Animación para el logo al pasar el ratón */
-        .logo-hover { transition: transform 0.3s ease; }
-        .logo-hover:hover { transform: scale(1.05); }
+        /* Fondo degradado suave inspirado en el logo original para secciones enteras */
+        .nx-gradient-bg {
+            background: linear-gradient(135deg, rgba(135, 206, 235, 0.4) 0%, rgba(255, 182, 193, 0.4) 100%);
+        }
+
+        /* Degradado de texto para títulos */
+        .nx-text-gradient {
+            background: linear-gradient(135deg, #0047AB 0%, #E033A0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Estilo para las tarjetas con efecto cristal (glassmorphism) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Animación suave flotante */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Logo de texto estilizado con CSS */
+        .ns-logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #0047AB; /* Azul principal */
+            position: relative;
+            display: inline-block;
+        }
+
+        .ns-logo-text::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #87CEEB 0%, #FFB6C1 100%); /* Degradado original */
+            border-radius: 2px;
+        }
     </style>
 </head>
-<body class="bg-slate-50 font-['Inter'] antialiased">
+<body class="bg-nxBackground text-gray-800 antialiased">
 
-    <nav class="fixed w-full z-50 glass shadow-sm">
+    <nav class="fixed w-full z-50 bg-white/70 backdrop-blur-md shadow-sm border-b border-gray-100">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
             <div class="flex items-center">
-                <img src="logo.jpeg" alt="NexSalud Logo" class="h-12 w-auto logo-hover">
+                <span class="ns-logo-text">NexSalud</span>
             </div>
-            
-            <div class="hidden md:flex space-x-8 font-semibold text-nxBlue">
-                <a href="#inicio" class="hover:text-nxPink transition">Inicio</a>
-                <a href="#que-hacemos" class="hover:text-nxPink transition">¿Qué hacemos?</a>
-                <a href="#pilares" class="hover:text-nxPink transition">Servicios</a>
+            <div class="hidden md:flex space-x-8 font-medium text-nxBlueText">
+                <a href="#inicio" class="hover:text-nxBlueText/70 transition">Inicio</a>
+                <a href="#que-hacemos" class="hover:text-nxBlueText/70 transition">¿Qué hacemos?</a>
+                <a href="#pilares" class="hover:text-nxBlueText/70 transition">Pilares</a>
+                <a href="#objetivos" class="hover:text-nxBlueText/70 transition">Objetivos</a>
             </div>
-            <a href="#" class="bg-nxBlue text-white px-6 py-2 rounded-full font-bold shadow-lg hover:shadow-nxBlue/30 transition">
-                Acceso Portal
+            <a href="#" class="bg-nxBlueText text-white px-6 py-2.5 rounded-full font-semibold hover:bg-nxBlueText/90 transition shadow-md text-sm">
+                Portal Profesional
             </a>
         </div>
     </nav>
 
-    <section id="inicio" class="pt-40 pb-24 nx-gradient overflow-hidden">
+    <section id="inicio" class="pt-32 pb-20 nx-gradient-bg overflow-hidden">
         <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 text-left" data-aos="fade-right">
-                <h1 class="text-5xl md:text-6xl font-['Poppins'] font-bold text-nxBlue leading-tight mb-6">
-                    Tu salud bajo <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-nxBlue to-pink-500">control digital.</span>
+            <div class="md:w-1/2" data-aos="fade-right">
+                <h1 class="font-title text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-nxBlueText mb-6">
+                    Solución tecnológica<br>para tu <span class="nx-text-gradient">seguridad farmacológica</span>.
                 </h1>
-                <p class="text-xl text-gray-700 mb-8 max-w-lg">
-                    NexSalud es el puente inteligente que garantiza que cada tratamiento sea seguro, necesario y supervisado por profesionales.
+                <p class="text-lg text-gray-700 mb-8 max-w-lg">
+                    Actuamos como un puente inteligente para erradicar los riesgos de la automedicación y garantizar tratamientos supervisados.
                 </p>
                 <div class="flex space-x-4">
-                    <button class="bg-nxBlue text-white px-8 py-4 rounded-2xl font-bold shadow-xl hover:-translate-y-1 transition">Empezar ahora</button>
-                    <button class="bg-white text-nxBlue px-8 py-4 rounded-2xl font-bold shadow-md hover:bg-gray-50 transition">Saber más</button>
+                    <a href="#que-hacemos" class="bg-nxBlueText text-white px-8 py-3 rounded-full font-bold hover:bg-nxBlueText/90 transition shadow-lg">Descubrir más</a>
+                    <a href="#pilares" class="bg-white text-nxBlueText border border-gray-200 px-8 py-3 rounded-full font-bold hover:bg-gray-50 transition shadow-sm">Ver Servicios</a>
                 </div>
             </div>
-            
-            <div class="md:w-1/2 mt-16 md:mt-0" data-aos="zoom-in">
-                <div class="floating bg-white/50 p-10 rounded-[3rem] backdrop-blur-md border border-white shadow-2xl max-w-md mx-auto">
-                    <img src="logo.jpeg" alt="NexSalud Hero" class="w-full h-auto drop-shadow-2xl">
+            <div class="md:w-1/2 mt-16 md:mt-0 relative" data-aos="zoom-in" data-aos-delay="200">
+                <div class="floating w-full max-w-lg mx-auto p-12 bg-white/40 rounded-3xl backdrop-blur-sm text-center border border-white/60">
+                    <span class="ns-logo-text text-5xl md:text-6xl">NexSalud</span>
+                    <p class="text-nxBlueText mt-4 font-semibold">Tu Salud, Nuestra Prioridad</p>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="que-hacemos" class="py-24 bg-white">
-        <div class="container mx-auto px-6 text-center">
-            <div class="max-w-3xl mx-auto mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-bold text-nxBlue mb-6">¿Qué hacemos?</h2>
-                <p class="text-lg text-gray-600 leading-relaxed">
-                    Nacemos de la necesidad de cerrar una brecha crítica en la seguridad del paciente. Actualmente, la falta de interconexión facilita el uso inadecuado de fármacos como la <strong>oximetazolina</strong> (Respibien) o el <strong>Ibuprofeno 600mg</strong>.
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 glass rounded-3xl" data-aos="fade-up" data-aos-delay="100">
-                    <div class="bg-nxBlue/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                        <i data-lucide="map-pin" class="text-nxBlue"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-4">Trazabilidad</h4>
-                    <p class="text-gray-500">Historial farmacológico unificado que acompaña al paciente en todo momento.</p>
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div data-aos="fade-right">
+                    <span class="text-nxBlueText font-bold bg-nxGradientStart/20 px-4 py-1 rounded-full text-sm">¿QUÉ HACEMOS?</span>
+                    <h2 class="font-title text-3xl md:text-4xl font-bold text-gray-900 mt-4 mb-6 leading-tight">Cerrando una brecha crítica en la seguridad del paciente.</h2>
+                    <p class="text-gray-700 leading-relaxed text-lg">
+                        Actualmente, la falta de interconexión entre farmacias facilita el uso inadecuado de fármacos que, aunque parecen inofensivos, requieren un seguimiento estricto. Nuestra motivación es dotar al sistema de una red de seguridad digital que evite que estos fármacos se conviertan en un problema de salud pública.
+                    </p>
                 </div>
-                <div class="p-8 glass rounded-3xl" data-aos="fade-up" data-aos-delay="200">
-                    <div class="bg-nxBlue/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                        <i data-lucide="zap" class="text-nxBlue"></i>
+                <div data-aos="fade-left" class="nx-gradient-bg p-12 rounded-3xl">
+                    <h3 class="font-title text-2xl font-semibold text-nxBlueText mb-8">El Problema que Resolvemos</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4 bg-white/60 p-5 rounded-2xl border border-white/80">
+                            <i data-lucide="droplet" class="w-10 h-10 text-nxGradientStart"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Oximetazolina (Respibien, Utabon)</h4>
+                                <p class="text-gray-600 text-sm">Fuerte dependencia y efecto rebote si no se controla.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 bg-white/60 p-5 rounded-2xl border border-white/80">
+                            <i data-lucide="pill" class="w-10 h-10 text-nxGradientStart"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Ibuprofeno 600mg o Omeprazol</h4>
+                                <p class="text-gray-600 text-sm">Abuso crónico normalizado con riesgos ocultos graves.</p>
+                            </div>
+                        </div>
                     </div>
-                    <h4 class="text-xl font-bold mb-4">Alertas IA</h4>
-                    <p class="text-gray-500">Detección automática de patrones de consumo compulsivo o irregular.</p>
-                </div>
-                <div class="p-8 glass rounded-3xl" data-aos="fade-up" data-aos-delay="300">
-                    <div class="bg-nxBlue/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                        <i data-lucide="shield-check" class="text-nxBlue"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-4">Prevención</h4>
-                    <p class="text-gray-500">Reducción de dependencias y efectos adversos mediante educación real.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 bg-slate-900 text-white">
+    <section id="pilares" class="py-24 bg-gray-50 border-y border-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="font-title text-3xl md:text-4xl font-bold text-gray-900 mb-4">Nuestro Ecosistema Informativo</h2>
+                <div class="w-24 h-1 bg-nxGradientEnd mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="glass-card p-10 rounded-3xl border-t-4 border-nxGradientStart" data-aos="flip-left" data-aos-delay="100">
+                    <div class="flex items-center mb-6">
+                        <i data-lucide="database-zap" class="w-10 h-10 text-nxGradientStart mr-4"></i>
+                        <h3 class="font-title text-3xl font-bold text-nxBlueText">Nex<span class="text-nxGradientStart">ora</span></h3>
+                    </div>
+                    <p class="text-nxBlueText font-semibold mb-6 italic">Gestión Farmacéutica Inteligente (Profesionales)</p>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start"><i data-lucide="search-check" class="text-nxGradientStart mr-3 mt-1 w-5"></i> Centralizar registro de ventas de medicamentos con potencial de abuso.</li>
+                        <li class="flex items-start"><i data-lucide="bell-ring" class="text-nxGradientStart mr-3 mt-1 w-5"></i> Alertas automatizadas por patrones de consumo irregulares.</li>
+                        <li class="flex items-start"><i data-lucide="history" class="text-nxGradientStart mr-3 mt-1 w-5"></i> Acceso a un historial farmacológico unificado y no fragmentado.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-10 rounded-3xl border-t-4 border-nxGradientEnd" data-aos="flip-left" data-aos-delay="300">
+                    <div class="flex items-center mb-6">
+                        <i data-lucide="user-plus" class="w-10 h-10 text-nxGradientEnd mr-4"></i>
+                        <h3 class="font-title text-3xl font-bold text-nxBlueText">Nex<span class="text-nxGradientEnd">life</span></h3>
+                    </div>
+                    <p class="text-nxGradientEnd font-semibold mb-6 italic">Empoderamiento del Paciente (Ciudadanos)</p>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start"><i data-lucide="activity" class="text-nxGradientEnd mr-3 mt-1 w-5"></i> Consulta clara del historial personalizado de medicación.</li>
+                        <li class="flex items-start"><i data-lucide="info" class="text-nxGradientEnd mr-3 mt-1 w-5"></i> Información rigurosa sobre riesgos de efectos adversos y dependencia.</li>
+                        <li class="flex items-start"><i data-lucide="shield-check" class="text-nxGradientEnd mr-3 mt-1 w-5"></i> Fomentar una cultura de autocuidado responsable con datos reales.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="objetivos" class="py-24 nx-gradient-bg">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="font-title text-3xl md:text-4xl font-bold text-nxBlueText mb-4">¿Qué queremos conseguir?</h2>
+                <p class="text-gray-700 max-w-xl mx-auto">Transformar el modelo actual de dispensación en uno asistido y preventivo.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center glass-card p-8 rounded-2xl" data-aos="zoom-in" data-aos-delay="100">
+                    <i data-lucide="map-pin" class="mx-auto mb-6 text-nxBlueText w-14 h-14"></i>
+                    <h4 class="text-xl font-bold text-nxBlueText mb-4">Garantizar la Trazabilidad</h4>
+                    <p class="text-gray-700 text-sm">Historial que acompaña al paciente para detectar compras compulsivas en distintos establecimientos.</p>
+                </div>
+                <div class="text-center glass-card p-8 rounded-2xl" data-aos="zoom-in" data-aos-delay="200">
+                    <i data-lucide="zap" class="mx-auto mb-6 text-nxBlueText w-14 h-14"></i>
+                    <h4 class="text-xl font-bold text-nxBlueText mb-4">Empoderar al Profesional</h4>
+                    <p class="text-gray-700 text-sm">Alertas automáticas para intervención objetiva ante analgésicos opioides o abuso de antibióticos.</p>
+                </div>
+                <div class="text-center glass-card p-8 rounded-2xl" data-aos="zoom-in" data-aos-delay="300">
+                    <i data-lucide="graduation-cap" class="mx-auto mb-6 text-nxBlueText w-14 h-14"></i>
+                    <h4 class="text-xl font-bold text-nxBlueText mb-4">Educar para la Prevención</h4>
+                    <p class="text-gray-700 text-sm">Comprensión de los peligros de la automedicación, reduciendo resistencias y dependencias.</p>
+                </div>
+            </div>
+
+            <div class="mt-24 text-center" data-aos="fade-up">
+                <h3 class="font-title text-2xl font-bold text-nxBlueText mb-10">Alineados con el Compromiso Social (ODS)</h3>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <span class="bg-white/80 text-nxBlueText font-bold px-6 py-3 rounded-xl shadow border border-white">ODS 3: Salud y Bienestar</span>
+                    <span class="bg-white/80 text-nxBlueText font-bold px-6 py-3 rounded-xl shadow border border-white">ODS 9: Innovación e Infraestructura</span>
+                    <span class="bg-white/80 text-nxBlueText font-bold px-6 py-3 rounded-xl shadow border border-white">ODS 10: Reducción de Desigualdades</span>
+                </div>
+                <p class="text-gray-700 mt-8 max-w-xl mx-auto text-sm italic">
+                    Creemos que la digitalización es la clave para un sistema de salud más preventivo que reactivo.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-16 border-t border-gray-800">
         <div class="container mx-auto px-6 text-center">
-            <img src="logo.jpeg" alt="Logo Footer" class="h-10 mx-auto mb-6 brightness-0 invert opacity-80">
-            <p class="text-slate-400 max-w-sm mx-auto mb-8">Trabajando por un sistema de salud más preventivo que reactivo.</p>
-            <div class="border-t border-slate-800 pt-8 text-slate-500 text-sm">
-                &copy; 2026 NexSalud. Todos los derechos reservados.
+            <div class="mb-6 opacity-80">
+                <span class="ns-logo-text text-white">NexSalud</span>
+            </div>
+            <p class="mb-8 max-w-md mx-auto">Nuestra misión es transformar la seguridad farmacológica en nuestra comunidad.</p>
+            <div class="flex justify-center space-x-6 text-nxGradientStart font-medium mb-10">
+                <a href="#inicio" class="hover:text-nxGradientStart/80">Inicio</a>
+                <a href="#que-hacemos" class="hover:text-nxGradientStart/80">¿Qué hacemos?</a>
+                <a href="#pilares" class="hover:text-nxGradientStart/80">Pilares</a>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-xs">
+                &copy; 2024 NexSalud. Todos los derechos reservados. <br>
+                Coded with Tailwind CSS & AOS.
             </div>
         </div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: true });
+        // Inicializar la librería de animaciones AOS
+        AOS.init({
+            duration: 1000, // Duración de la animación en milisegundos
+            once: true // La animación solo ocurre una vez al hacer scroll
+        });
+        
+        // Inicializar los iconos Lucide
         lucide.createIcons();
     </script>
 </body>
