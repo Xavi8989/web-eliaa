@@ -1,312 +1,843 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>NexSalud - Innovación en Seguridad Farmacológica</title>
+
     
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
     
+
     <style>
+
         :root {
+
             --nex-blue: #0066ff;
+
             --nex-pink: #ff66cc;
+
             --bg-light: #f4f7ff;
+
         }
+
+
 
         body {
+
             font-family: 'Poppins', sans-serif;
+
             background-color: var(--bg-light);
+
             color: #1a1a1a;
+
             overflow-x: hidden;
+
             scroll-behavior: smooth;
+
         }
 
-        /* --- Animaciones Base --- */
+
+
+        /* --- Animaciones Base (CSS Puro) --- */
+
         @keyframes blob-float {
+
             0%, 100% { transform: translate(0, 0) scale(1); }
+
             33% { transform: translate(30px, -50px) scale(1.1); }
+
             66% { transform: translate(-20px, 20px) scale(0.9); }
+
         }
+
+
 
         @keyframes pulse-soft {
+
             0%, 100% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.4); }
+
             50% { box-shadow: 0 0 0 20px rgba(0, 102, 255, 0); }
+
         }
+
+
+
+        @keyframes slide-up-fade {
+
+            from { opacity: 0; transform: translateY(40px); }
+
+            to { opacity: 1; transform: translateY(0); }
+
+        }
+
+
+
+        @keyframes ecg-loader {
+
+            0% { stroke-dashoffset: 500; }
+
+            50% { stroke-dashoffset: 0; }
+
+            100% { stroke-dashoffset: -500; }
+
+        }
+
+
+
+        /* --- Clases de Utilidad para Animación --- */
 
         .animate-on-scroll {
+
             opacity: 0;
+
             transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+
         }
+
+
 
         .animate-on-scroll.is-visible {
+
             opacity: 1;
+
             transform: translateY(0) scale(1) !important;
+
         }
+
+
 
         /* --- Diseño de Componentes --- */
+
+        
+
+        /* Navegación Glassmórfica */
+
         .nav-glass {
+
             background: rgba(255, 255, 255, 0.7);
+
             backdrop-filter: blur(15px);
+
             -webkit-backdrop-filter: blur(15px);
+
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
         }
+
+
+
+        /* Estilo Píldora del Logo */
 
         .logo-pill {
+
             background: white;
+
             border-radius: 9999px;
-            padding: 5px 20px;
+
+            padding: 8px 25px;
+
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
             display: flex;
+
             align-items: center;
+
+            gap: 12px;
+
             transition: transform 0.3s ease;
+
         }
-        .logo-pill:hover { transform: scale(1.05); }
+
+        .logo-pill:hover { transform: scale(1.03); }
+
+
+
+        /* Icono ECG Animado */
+
+        .ecg-icon-svg {
+
+            stroke-dasharray: 500;
+
+            stroke-dashoffset: 0;
+
+            animation: ecg-loader 3s infinite linear;
+
+        }
+
+
+
+        /* Fondo del Hero con 'Blobs' */
 
         .hero-gradient-bg {
+
             background: linear-gradient(135deg, #e0f2fe 0%, #fce7f3 100%);
+
             position: relative;
+
             overflow: hidden;
+
         }
+
+
 
         .blob {
+
             position: absolute;
+
             border-radius: 50%;
+
             filter: blur(60px);
+
             opacity: 0.5;
+
             animation: blob-float 15s infinite alternate;
+
             z-index: 1;
+
         }
+
+
+
+        /* Lienzo de Partículas Interactivas */
 
         #particles-js {
+
             position: absolute;
+
             width: 100%;
+
             height: 100%;
+
             top: 0;
+
             left: 0;
+
             z-index: 2;
+
         }
+
+
+
+        /* Botón Espectacular */
 
         .btn-spectacular {
+
             background: linear-gradient(135deg, var(--nex-blue) 0%, #00d4ff 100%);
+
             color: white;
+
             padding: 16px 35px;
+
             border-radius: 9999px;
+
             font-weight: 700;
+
             box-shadow: 0 10px 25px rgba(0, 102, 255, 0.3);
+
             transition: all 0.3s ease;
+
             position: relative;
+
             overflow: hidden;
-        }
-        .btn-spectacular:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 102, 255, 0.4);
+
         }
 
-        .card-perspective { perspective: 1000px; }
+        .btn-spectacular::after {
+
+            content: '';
+
+            position: absolute;
+
+            top: 0; left: -100%;
+
+            width: 100%; height: 100%;
+
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+
+            transition: 0.5s;
+
+        }
+
+        .btn-spectacular:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow: 0 15px 35px rgba(0, 102, 255, 0.4);
+
+        }
+
+        .btn-spectacular:hover::after { left: 100%; }
+
+
+
+        /* Tarjetas Neomórficas/Glass con Efecto Tilt 3D */
+
+        .card-perspective {
+
+            perspective: 1000px;
+
+        }
+
+
 
         .card-tilt {
+
             background: rgba(255, 255, 255, 0.6);
+
             backdrop-filter: blur(10px);
+
             border: 1px solid rgba(255, 255, 255, 0.3);
+
             border-radius: 40px;
+
             padding: 40px;
+
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+
             transition: transform 0.1s ease, box-shadow 0.3s ease;
+
             transform-style: preserve-3d;
+
         }
+
+        
+
+        .card-tilt:hover {
+
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+
+        }
+
+
+
+        .card-content {
+
+            transform: translateZ(50px); /* Efecto de profundidad */
+
+        }
+
+
+
+        /* Títulos con Gradiente */
 
         .text-gradient {
+
             background: linear-gradient(135deg, var(--nex-blue) 0%, var(--nex-pink) 100%);
+
             -webkit-background-clip: text;
+
             -webkit-text-fill-color: transparent;
+
         }
+
+
+
+        /* Listas con Iconos Animados */
 
         .list-icon {
+
             display: inline-flex;
+
             align-items: center;
+
             justify-content: center;
+
             width: 28px;
+
             height: 28px;
+
             background: rgba(0, 102, 255, 0.1);
+
             color: var(--nex-blue);
+
             border-radius: 50%;
+
             margin-right: 12px;
+
             margin-top: 3px;
+
         }
 
-        .ods-box:hover { transform: scale(1.05) translateY(-5px); transition: 0.4s; }
+
+
+        /* Sección de ODS con Hover Espectacular */
+
+        .ods-box {
+
+            transition: all 0.4s ease;
+
+            cursor: pointer;
+
+        }
+
+        .ods-box:hover {
+
+            transform: scale(1.05) translateY(-5px);
+
+        }
+
+
+
     </style>
+
 </head>
+
 <body>
 
+
+
     <nav class="fixed w-full z-50 nav-glass">
+
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#inicio" class="logo-pill">
-                <img src="logo-nexsalud.png" alt="NexSalud Logo" class="h-12 w-auto object-contain">
-            </a>
-            <div class="hidden md:flex space-x-10 font-semibold text-sm uppercase tracking-widest text-slate-700">
-                <a href="#solucion" class="hover:text-[#0066ff] transition">Solución</a>
-                <a href="#pilares" class="hover:text-[#0066ff] transition">Nexora & Nexlife</a>
-                <a href="#compromiso" class="hover:text-[#0066ff] transition">Compromiso</a>
+
+            <div class="logo-pill">
+
+                <svg class="w-9 h-9 text-[#0066ff]" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6">
+
+                    <circle cx="50" cy="50" r="45" stroke-opacity="0.2"/>
+
+                    <path class="ecg-icon-svg" d="M10,50 L35,50 L42,25 L58,75 L65,50 L90,50" stroke-linecap="round" stroke-linejoin="round"/>
+
+                </svg>
+
+                <span class="text-3xl font-extrabold tracking-tight text-[#0066ff]">NexSalud</span>
+
             </div>
+
+            <div class="hidden md:flex space-x-10 font-semibold text-sm uppercase tracking-widest text-slate-700">
+
+                <a href="#solucion" class="hover:text-[#0066ff] transition">Solución</a>
+
+                <a href="#pilares" class="hover:text-[#0066ff] transition">Nexora & Nexlife</a>
+
+                <a href="#compromiso" class="hover:text-[#0066ff] transition">Compromiso</a>
+
+            </div>
+
         </div>
+
     </nav>
 
+
+
     <section id="inicio" class="min-h-screen hero-gradient-bg flex items-center pt-24">
+
         <div id="particles-js"></div>
+
         
+
         <div class="blob w-96 h-96 bg-blue-300 top-1/4 left-10"></div>
+
         <div class="blob w-80 h-80 bg-pink-300 bottom-1/4 right-10"></div>
 
+
+
         <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+
             <div class="animate-on-scroll" style="transform: translateY(40px);">
+
                 <h1 class="text-6xl md:text-7xl font-extrabold leading-tight mb-8">
+
                     <span class="text-[#0066ff]">Erradicando riesgos</span>,<br>
+
                     transformando la seguridad farmacológica.
+
                 </h1>
+
                 <p class="text-lg text-slate-800 mb-10 max-w-lg leading-relaxed">
+
                     NexSalud es una plataforma tecnológica avanzada diseñada para transformar la seguridad farmacológica, actuando como un puente inteligente entre establecimientos sanitarios y ciudadanos.
+
                 </p>
+
                 <a href="#solucion" class="btn-spectacular text-lg inline-block">Descubrir NexSalud</a>
+
             </div>
+
             <div class="relative flex justify-center items-center animate-on-scroll" style="transform: translateY(40px); transition-delay: 0.2s;">
-                <div class="bg-white p-12 rounded-[50px] shadow-2xl border-4 border-white w-full max-w-md text-center" style="animation: blob-float 10s infinite alternate;">
-                    <svg class="w-32 h-32 text-[#0066ff] mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
-                    </svg>
-                    <h4 class="text-2xl font-bold text-slate-800">Smart Pharma Tech</h4>
-                    <p class="text-slate-600 mt-2">Integración de datos y análisis preventivo en tiempo real.</p>
+
+                <div class="bg-white p-12 rounded-[50px] shadow-2xl border-4 border-white w-full max-w-md" style="animation: blob-float 10s infinite alternate;">
+
+                    <div class="text-center">
+
+                        <svg class="w-32 h-32 text-[#0066ff] mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+
+                        </svg>
+
+                        <h4 class="text-2xl font-bold text-slate-800">Smart Pharma Tech</h4>
+
+                        <p class="text-slate-600 mt-2">Integración de datos y análisis preventivo en tiempo real.</p>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
+
     </section>
+
+
 
     <section id="solucion" class="py-32 bg-white">
+
         <div class="container mx-auto px-6">
+
             <div class="text-center mb-16 animate-on-scroll" style="transform: translateY(30px);">
+
                 <h2 class="text-4xl md:text-5xl font-extrabold mb-5 text-gradient inline-block">Presentación Institucional</h2>
+
                 <div class="w-24 h-1 bg-gradient-to-r from-[#0066ff] to-[#ff66cc] mx-auto rounded-full"></div>
+
             </div>
+
             <div class="max-w-4xl mx-auto text-center animate-on-scroll" style="transform: translateY(30px); transition-delay: 0.2s;">
+
                 <p class="text-2xl leading-relaxed text-slate-700 font-light">
-                    Dotamos a los profesionales de herramientas de decisión en tiempo real para garantizar que cada tratamiento sea seguro, necesario y supervisado.
+
+                    Dotamos a los profesionales de herramientas de decisión en tiempo real para garantizar que cada tratamiento sea seguro, necesario y supervisado. NexSalud surge para solucionar deficiencias críticas y el desconocimiento del paciente.
+
                 </p>
+
             </div>
+
         </div>
+
     </section>
+
+
 
     <section id="pilares" class="py-32 bg-slate-50 relative overflow-hidden">
+
         <div class="container mx-auto px-6 relative z-10">
+
             <div class="text-center mb-20 animate-on-scroll" style="transform: translateY(30px);">
+
                 <h2 class="text-4xl md:text-5xl font-extrabold mb-5 text-gradient inline-block">Los Pilares de Nuestro Servicio</h2>
+
             </div>
+
+
 
             <div class="grid md:grid-cols-2 gap-12 card-perspective">
+
+                
+
                 <div class="card-tilt animate-on-scroll" style="transform: translateX(-50px);">
-                    <div class="w-20 h-20 bg-[#0066ff] text-white rounded-3xl flex items-center justify-center mb-8 shadow-lg" style="animation: pulse-soft 2s infinite;">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+
+                    <div class="card-content">
+
+                        <div class="w-20 h-20 bg-[#0066ff] text-white rounded-3xl flex items-center justify-center mb-8 shadow-lg shadow-blue-200" style="animation: pulse-soft 2s infinite;">
+
+                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+
+                        </div>
+
+                        <h3 class="text-4xl font-extrabold text-[#0066ff] mb-4">Nexora</h3>
+
+                        <p class="font-semibold text-slate-500 mb-8 uppercase tracking-widest text-sm">Gestión Farmacéutica Inteligente</p>
+
+                        <p class="text-slate-700 leading-relaxed mb-10 text-lg">Núcleo operativo diseñado para profesionales del sector, optimizando la seguridad en la dispensación.</p>
+
+                        <ul class="space-y-6 text-slate-800">
+
+                            <li class="flex items-start"><span class="list-icon"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg></span>Registro centralizado de ventas con potencial de abuso.</li>
+
+                            <li class="flex items-start"><span class="list-icon"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg></span>Alertas automatizadas ante patrones de consumo irregulares.</li>
+
+                            <li class="flex items-start"><span class="list-icon"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg></span>Historial farmacológico unificado entre establecimientos.</li>
+
+                        </ul>
+
                     </div>
-                    <h3 class="text-4xl font-extrabold text-[#0066ff] mb-4">Nexora</h3>
-                    <p class="font-semibold text-slate-500 mb-8 uppercase tracking-widest text-sm">Gestión Farmacéutica Inteligente</p>
-                    <ul class="space-y-6 text-slate-800">
-                        <li class="flex items-start"><span class="list-icon">✓</span>Registro centralizado de ventas.</li>
-                        <li class="flex items-start"><span class="list-icon">✓</span>Alertas automatizadas de consumo.</li>
-                    </ul>
+
                 </div>
+
+
 
                 <div class="card-tilt animate-on-scroll" style="transform: translateX(50px); transition-delay: 0.1s;">
-                    <div class="w-20 h-20 bg-[#ff66cc] text-white rounded-3xl flex items-center justify-center mb-8 shadow-lg" style="animation: pulse-soft 2s infinite; animation-delay: 1s;">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+
+                    <div class="card-content">
+
+                        <div class="w-20 h-20 bg-[#ff66cc] text-white rounded-3xl flex items-center justify-center mb-8 shadow-lg shadow-pink-200" style="animation: pulse-soft 2s infinite; animation-delay: 1s;">
+
+                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+
+                        </div>
+
+                        <h3 class="text-4xl font-extrabold text-[#ff66cc] mb-4">Nexlife</h3>
+
+                        <p class="font-semibold text-slate-500 mb-8 uppercase tracking-widest text-sm">Empoderamiento del Paciente</p>
+
+                        <p class="text-slate-700 leading-relaxed mb-10 text-lg">Espacio dedicado a la transparencia y educación sanitaria, para gestionar la salud de manera consciente.</p>
+
+                        <ul class="space-y-6 text-slate-800">
+
+                            <li class="flex items-start"><span class="list-icon" style="color: #ff66cc; background: rgba(255, 102, 204, 0.1);"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg></span>Consulta de historial personalizado de medicación clara y accesible.</li>
+
+                            <li class="flex items-start"><span class="list-icon" style="color: #ff66cc; background: rgba(255, 102, 204, 0.1);"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg></span>Información rigurosa sobre riesgos de efectos adversos y dependencia.</li>
+
+                            <li class="flex items-start"><span class="list-icon" style="color: #ff66cc; background: rgba(255, 102, 204, 0.1);"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg></span>Fomento del autocuidado responsable apoyado por datos reales.</li>
+
+                        </ul>
+
                     </div>
-                    <h3 class="text-4xl font-extrabold text-[#ff66cc] mb-4">Nexlife</h3>
-                    <p class="font-semibold text-slate-500 mb-8 uppercase tracking-widest text-sm">Empoderamiento del Paciente</p>
-                    <ul class="space-y-6 text-slate-800">
-                        <li class="flex items-start"><span class="list-icon" style="background:rgba(255,102,204,0.1); color:#ff66cc">✓</span>Consulta de historial personalizado.</li>
-                        <li class="flex items-start"><span class="list-icon" style="background:rgba(255,102,204,0.1); color:#ff66cc">✓</span>Información rigurosa de riesgos.</li>
-                    </ul>
+
                 </div>
+
+
+
             </div>
+
         </div>
+
     </section>
+
+
 
     <section id="compromiso" class="py-32 bg-white relative">
+
         <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+
             <div class="animate-on-scroll" style="transform: translateX(-40px);">
-                <h2 class="text-4xl md:text-5xl font-extrabold mb-8 text-gradient inline-block">Compromiso Social</h2>
+
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-8 text-gradient inline-block">Justificación y Compromiso Social</h2>
+
+                <p class="text-lg text-slate-700 leading-relaxed mb-10">
+
+                    NexSalud surge para solucionar deficiencias críticas y estamos alineados con los Objetivos de Desarrollo Sostenible (ODS). Creemos que la digitalización es la clave para un sistema de salud más preventivo.
+
+                </p>
+
                 <div class="flex flex-col gap-6">
-                    <div class="flex items-center gap-6 p-6 bg-slate-50 rounded-2xl ods-box">
+
+                    <div class="flex items-center gap-6 p-6 bg-slate-50 rounded-2xl shadow-inner ods-box animate-on-scroll" style="transform: translateY(20px); transition-delay: 0.1s;">
+
                         <span class="text-5xl">💚</span>
+
                         <p class="font-semibold text-[#0066ff]">Salud y bienestar (ODS 3)</p>
+
                     </div>
-                    <div class="flex items-center gap-6 p-6 bg-slate-50 rounded-2xl ods-box">
+
+                    <div class="flex items-center gap-6 p-6 bg-slate-50 rounded-2xl shadow-inner ods-box animate-on-scroll" style="transform: translateY(20px); transition-delay: 0.2s;">
+
                         <span class="text-5xl">🏭</span>
-                        <p class="font-semibold text-[#0066ff]">Innovación (ODS 9 y 10)</p>
+
+                        <p class="font-semibold text-[#0066ff]">Reducir desigualdades y Fomento de Innovación (ODS 9 y 10)</p>
+
                     </div>
+
                 </div>
+
             </div>
-            <div class="grid grid-cols-2 gap-6 card-perspective animate-on-scroll">
-                <div class="bg-[#27ae60] h-48 rounded-[35px] flex items-center justify-center text-white text-4xl font-bold card-tilt">ODS 3</div>
-                <div class="bg-[#f39c12] h-48 rounded-[35px] flex items-center justify-center text-white text-4xl font-bold mt-10 card-tilt">ODS 9</div>
+
+            <div class="grid grid-cols-2 gap-6 card-perspective animate-on-scroll" style="transform: translateX(40px); transition-delay: 0.2s;">
+
+                <div class="bg-blue-600 h-48 rounded-[35px] flex items-center justify-center text-white text-5xl font-bold card-tilt" style="background: #27ae60;">ODS 3</div>
+
+                <div class="bg-pink-500 h-48 rounded-[35px] flex items-center justify-center text-white text-5xl font-bold mt-10 card-tilt" style="background: #f39c12;">ODS 9</div>
+
+                <div class="bg-indigo-600 h-48 rounded-[35px] flex items-center justify-center text-white text-5xl font-bold -mt-10 card-tilt" style="background: #e74c3c;">ODS 10</div>
+
+                <div class="bg-slate-900 h-48 rounded-[35px] flex items-center justify-center text-white text-5xl font-bold card-tilt">SDGs</div>
+
             </div>
+
         </div>
+
     </section>
 
-    <footer class="bg-slate-950 text-slate-300 py-20">
+
+
+    <footer class="bg-slate-950 text-slate-300 py-20 relative z-10">
+
         <div class="container mx-auto px-6 text-center">
+
             <div class="logo-pill inline-flex items-center mb-10 mx-auto">
-                <img src="logo-nexsalud.png" alt="NexSalud Logo" class="h-10 w-auto object-contain">
+
+                <svg class="w-8 h-8 text-[#0066ff]" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6"><circle cx="50" cy="50" r="45" stroke-opacity="0.2"/><path class="ecg-icon-svg" d="M10,50 L35,50 L42,25 L58,75 L65,50 L90,50" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+                <span class="text-3xl font-bold tracking-tight text-[#0066ff]">NexSalud</span>
+
             </div>
+
             <p class="text-xl mb-10 max-w-lg mx-auto leading-relaxed">Innovación tecnológica para un sistema de salud preventivo y seguro.</p>
+
+            <div class="flex justify-center space-x-12 text-slate-500 text-sm uppercase tracking-wider font-semibold">
+
+                <a href="#solucion" class="hover:text-white transition">Solución</a>
+
+                <a href="#pilares" class="hover:text-white transition">Pilares</a>
+
+                <a href="#compromiso" class="hover:text-white transition">Compromiso</a>
+
+            </div>
+
             <p class="mt-16 text-slate-600 text-sm">&copy; 2024 NexSalud. Solución tecnológica avanzada.</p>
+
         </div>
+
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.min.js"></script>
+
     <script>
-        // Configuración de Partículas
+
         particlesJS("particles-js", {
+
             "particles": {
+
                 "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+
                 "color": { "value": ["#0066ff", "#ff66cc"] },
+
                 "shape": { "type": "circle" },
-                "opacity": { "value": 0.3 },
-                "size": { "value": 4 },
-                "move": { "enable": true, "speed": 1.5 }
+
+                "opacity": { "value": 0.3, "random": true },
+
+                "size": { "value": 4, "random": true },
+
+                "line_linked": { "enable": false },
+
+                "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
+
             },
-            "interactivity": { "events": { "onhover": { "enable": true, "mode": "bubble" } } },
+
+            "interactivity": {
+
+                "detect_on": "canvas",
+
+                "events": { "onhover": { "enable": true, "mode": "bubble" }, "onclick": { "enable": true, "mode": "push" } },
+
+                "mode": { "bubble": { "distance": 200, "size": 6, "duration": 2, "opacity": 0.5, "speed": 3 } }
+
+            },
+
             "retina_detect": true
+
         });
 
-        // Animación al hacer Scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                }
-            });
-        }, { threshold: 0.2 });
-
-        document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
-
-        // Efecto Tilt 3D en Tarjetas
-        document.querySelectorAll('.card-tilt').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -10;
-                const rotateY = ((x - centerX) / centerX) * 10;
-                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'rotateX(0deg) rotateY(0deg)';
-            });
-        });
     </script>
+
+
+
+    <script>
+
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+
+
+        const observerOptions = {
+
+            root: null,
+
+            rootMargin: '0px',
+
+            threshold: 0.2 // Se activa cuando el 20% del elemento es visible
+
+        };
+
+
+
+        const observer = new IntersectionObserver((entries) => {
+
+            entries.forEach((entry) => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add('is-visible');
+
+                    observer.unobserve(entry.target); // Solo animar una vez
+
+                }
+
+            });
+
+        }, observerOptions);
+
+
+
+        animatedElements.forEach((el) => observer.observe(el));
+
+    </script>
+
+
+
+    <script>
+
+        const cards = document.querySelectorAll('.card-tilt');
+
+
+
+        cards.forEach(card => {
+
+            card.addEventListener('mousemove', (e) => {
+
+                const rect = card.getBoundingClientRect();
+
+                const x = e.clientX - rect.left; // posición x del ratón dentro del elemento
+
+                const y = e.clientY - rect.top;  // posición y del ratón dentro del elemento
+
+                
+
+                const centerX = rect.width / 2;
+
+                const centerY = rect.height / 2;
+
+                
+
+                // Rotación máxima de 15 grados
+
+                const rotateX = ((y - centerY) / centerY) * -15; 
+
+                const rotateY = ((x - centerX) / centerX) * 15;
+
+                
+
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+            });
+
+
+
+            card.addEventListener('mouseleave', () => {
+
+                // Volver a la posición original suavemente
+
+                card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+
+                card.style.transition = 'transform 0.5s ease';
+
+                setTimeout(() => card.style.transition = 'transform 0.1s ease', 500);
+
+            });
+
+        });
+
+    </script>
+
+
+
 </body>
+
 </html>
+
+necesito que cambies el logo que hi ha al codi html per el de la foto que te pasat
